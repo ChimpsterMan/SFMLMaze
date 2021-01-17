@@ -7,9 +7,9 @@
 #include <SFML/Graphics.hpp>
 #include <filesystem>
 #include <vector>
-#include <time.h>
+//#include <time.h>
 #include <thread>
-#include <Windows.h>
+//#include <Windows.h>
 namespace f = std::experimental::filesystem;
 
 using namespace std;
@@ -84,8 +84,8 @@ ifstream iFile;
 ofstream oFile;
 
 sf::RenderWindow window;
-const int WIDTH = 600;
-const int HEIGHT = 600;
+const int WIDTH = 800;
+const int HEIGHT = 800;
 
 void listDirs() {
 	string path = f::current_path().u8string() + "/maps";
@@ -148,7 +148,9 @@ float getScale(vector<vector<int>> map) {
 }
 
 void draw(vector<vector<int>> map) {
-	float scale = getScale(map);
+	//float scale = getScale(map);
+
+	float scale = float(WIDTH)/map.size();
 
 	for (int y = 0; y < map.size(); y++) {
 		for (int x = 0; x < map[y].size(); x++) {
@@ -244,6 +246,8 @@ vector<vector<int>> genMap(vector<vector<int>> map, int x, int y, int width, int
 	if (delay > 0) {
 		//for (int i = 0; i < delay; i++) {
 		window.clear();
+		sf::Event e;
+		window.pollEvent(e);
 		draw(map);
 		window.display();
 		this_thread::sleep_for(chrono::milliseconds(delay));
@@ -341,6 +345,8 @@ void setup() {
 	Position end;
 	int delay = 0;
 
+	Map = std::vector<std::vector<int>>();
+
 	cout << "Would you like to Generate a Maze?(yes/no)" << endl;
 	cin >> input;
 	if (input == "yes") {
@@ -380,10 +386,10 @@ void setup() {
 					Map[count].push_back((int)line[i] - 48);
 				}
 				if (line[i] - 48 == 2) {
-					start = Position(count, i - 1);
+					//start = Position(count, i - 1);
 				}
 				if (line[i] - 48 == 3) {
-					end = Position(count, i - 1);
+					//end = Position(count, i - 1);
 				}
 				//cout << line[i];
 			}
